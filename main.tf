@@ -79,14 +79,13 @@ resource "aws_internet_gateway" "IG" {
 
 resource "aws_route_table" "route_table_public" {
   vpc_id = aws_vpc.appvpc.id
-   tags = {
-    Name = "public_rt"
-     }
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.IG.id
   }
+  tags = {
+    Name = "public_rt"
+  } 
 }
 
 
@@ -94,13 +93,12 @@ resource "aws_route_table" "route_table_public" {
 
 resource "aws_route_table" "route_table_private1" {
   vpc_id = aws_vpc.appvpc.id
-   tags = {
-    Name = "pvt1_rt"
-     }
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat1.id
+  }
+  tags = {
+    Name = "pvt1_rt"
   }
 }
 
@@ -108,13 +106,12 @@ resource "aws_route_table" "route_table_private1" {
 
 resource "aws_route_table" "route_table_private2" {
   vpc_id = aws_vpc.appvpc.id
-   tags = {
-    Name = "pvt2_rt"
-     }
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat2.id
+  }
+  tags = {
+    Name = "pvt2_rt"
   }
 }
 
@@ -122,31 +119,29 @@ resource "aws_route_table" "route_table_private2" {
 
 resource "aws_route_table" "route_table_private3" {
   vpc_id = aws_vpc.appvpc.id
-   tags = {
-    Name = "pvt3_rt"
-     }
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat1.id
   }
+  tags = {
+    Name = "pvt3_rt"
+  } 
 }
 
 #create route table4
 
 resource "aws_route_table" "route_table_private4" {
   vpc_id = aws_vpc.appvpc.id
-   tags = {
-    Name = "pvt4_rt"
-     }
-
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat2.id
   }
+  tags = {
+    Name = "pvt4_rt"
+  }
 }
 
-#route table Association01
+#route table Association01  
 
 resource "aws_route_table_association" "route_table_public" {
   subnet_id      = aws_subnet.subnet1.id
