@@ -10,7 +10,7 @@ resource "aws_vpc" "dbvpc" {
 resource "aws_subnet" "subnet01" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.1.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   map_public_ip_on_launch = "true"
   tags = {
     Name = "pubsub01"
@@ -20,7 +20,7 @@ resource "aws_subnet" "subnet01" {
 resource "aws_subnet" "subnet02" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.2.0/24"
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-1c"
   map_public_ip_on_launch = "true"
   tags = {
    Name = "pubsub02"
@@ -31,7 +31,7 @@ resource "aws_subnet" "subnet02" {
 resource "aws_subnet" "subnet03" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.3.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pvtsub01"
   }
@@ -42,7 +42,7 @@ resource "aws_subnet" "subnet03" {
 resource "aws_subnet" "subnet04" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.4.0/24"
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-1c"
   tags = {
     Name = "pvtsub02"
   }
@@ -53,7 +53,7 @@ resource "aws_subnet" "subnet04" {
 resource "aws_subnet" "subnet05" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.5.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pvtsub03"
   }
@@ -64,7 +64,7 @@ resource "aws_subnet" "subnet05" {
 resource "aws_subnet" "subnet06" {
   vpc_id     = aws_vpc.dbvpc.id
   cidr_block = "192.168.6.0/24"
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-1c"
   tags = {
     Name = "pvtsub04"
   }
@@ -146,6 +146,27 @@ resource "aws_route_table" "route_table_private04" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat02.id
   }
+}
+
+#nate gateway creation
+resource "aws_eip" "nat-01" {}
+
+resource "aws_nat_gateway" "nat01" {
+  allocation_id = aws_eip.nat-01.id
+  subnet_id     = aws_subnet.subnet01.id
+  tags = {
+    Name = "nat-01"
+ }
+}
+
+resource "aws_eip" "nat-02" {}
+
+resource "aws_nat_gateway" "nat02" {
+  allocation_id = aws_eip.nat-02.id
+  subnet_id     = aws_subnet.subnet02.id
+  tags = {
+    Name = "nat-02"
+ }
 }
 
 #route table Association01
