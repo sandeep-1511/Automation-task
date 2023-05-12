@@ -1,3 +1,6 @@
+provider "aws" {
+  region     = "eu-west-2"
+}
 # vpc creation
 resource "aws_vpc" "appvpc" {
   cidr_block       = "10.0.0.0/16"
