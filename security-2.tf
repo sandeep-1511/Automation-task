@@ -1,5 +1,5 @@
 #create security group
-  resource "aws_security_group" "ssh2_group" {
+  resource "aws_security_group" "ssh2" {
   name        = "ssh2"
   description = "ssh2 security group"
   vpc_id = aws_vpc.dbvpc.id
@@ -20,6 +20,6 @@ ingress {
   }
 }
 output "security_group_id-2" {
-  value = aws_security_group.ssh2_group.id
+  value = aws_security_group.ssh2.id
 }
 
