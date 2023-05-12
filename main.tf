@@ -1,6 +1,7 @@
 provider "aws" {
-  region     = "eu-west-2"
+  region     = "us-east-1"
 }
+
 # vpc creation
 resource "aws_vpc" "appvpc" {
   cidr_block       = "10.0.0.0/16"
@@ -13,7 +14,7 @@ resource "aws_vpc" "appvpc" {
 resource "aws_subnet" "subnet1" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.1.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pubsub1"
   }
@@ -22,7 +23,7 @@ resource "aws_subnet" "subnet1" {
 resource "aws_subnet" "subnet2" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.2.0/24"
-  availability_zone = "ap-south-1b"
+  availability_zone = "us-east-1c"
   tags = {
    Name = "pubsub2"
    }
@@ -32,7 +33,7 @@ resource "aws_subnet" "subnet2" {
 resource "aws_subnet" "subnet3" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.3.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pvtsub1"
   }
@@ -43,7 +44,7 @@ resource "aws_subnet" "subnet3" {
 resource "aws_subnet" "subnet4" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.4.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1c"
   tags = {
     Name = "pvtsub2"
   }
@@ -54,7 +55,7 @@ resource "aws_subnet" "subnet4" {
 resource "aws_subnet" "subnet5" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.5.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pvtsub3"
   }
@@ -65,7 +66,7 @@ resource "aws_subnet" "subnet5" {
 resource "aws_subnet" "subnet6" {
   vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.6.0/24"
-  availability_zone = "ap-south-1a"
+  availability_zone = "us-east-1d"
   tags = {
     Name = "pvtsub4"
   }
@@ -144,6 +145,27 @@ resource "aws_route_table" "route_table_private4" {
   }
 }
 
+#nate gateway creation
+resource "aws_eip" "nat-1" {}
+
+resource "aws_nat_gateway" "nat1" {
+  allocation_id = aws_eip.nat-1.id
+  subnet_id     = aws_subnet.subnet1.id
+  tags = {
+    Name = "nat-1"
+ }
+}
+
+resource "aws_eip" "nat-2" {}
+
+resource "aws_nat_gateway" "nat2" {
+  allocation_id = aws_eip.nat-2.id
+  subnet_id     = aws_subnet.subnet2.id
+  tags = {
+    Name = "nat-2"
+ }
+}
+
 #route table Association01  
 
 resource "aws_route_table_association" "route_table_public" {
@@ -151,7 +173,7 @@ resource "aws_route_table_association" "route_table_public" {
   route_table_id = aws_route_table.route_table_public.id
 }
 #route table association02
-resource "aws_route_table_association" "route_table_public" {
+resource "aws_route_table_association" "route_table_public-2" {
   subnet_id      = aws_subnet.subnet2.id
   route_table_id = aws_route_table.route_table_public.id
 }
@@ -179,8 +201,3 @@ resource "aws_route_table_association" "route_table_private4" {
   subnet_id      = aws_subnet.subnet6.id
   route_table_id = aws_route_table.route_table_private4.id
 }
-
-    
-
-
-
