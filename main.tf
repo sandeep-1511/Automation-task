@@ -1,5 +1,5 @@
 # vpc creation
-resource "aws_vpc" "main_digital" {
+resource "aws_vpc" "appvpc" {
   cidr_block       = "10.0.0.0/16"
   tags = {
     Name = "digitallink"
@@ -8,7 +8,7 @@ resource "aws_vpc" "main_digital" {
 #subnet creation 1
 
 resource "aws_subnet" "subnet1" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.1.0/24"
   availability_zone = "ap-south-1a"
   tags = {
@@ -17,7 +17,7 @@ resource "aws_subnet" "subnet1" {
 }
 #subnet creation 2
 resource "aws_subnet" "subnet2" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.2.0/24"
   availability_zone = "ap-south-1b"
   tags = {
@@ -27,7 +27,7 @@ resource "aws_subnet" "subnet2" {
 #subnet creation 3
 
 resource "aws_subnet" "subnet3" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.3.0/24"
   availability_zone = "ap-south-1a"
   tags = {
@@ -38,7 +38,7 @@ resource "aws_subnet" "subnet3" {
 #subnet creation 4
 
 resource "aws_subnet" "subnet4" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.4.0/24"
   availability_zone = "ap-south-1a"
   tags = {
@@ -49,7 +49,7 @@ resource "aws_subnet" "subnet4" {
 #subnet creation 5
 
 resource "aws_subnet" "subnet5" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.5.0/24"
   availability_zone = "ap-south-1a"
   tags = {
@@ -60,7 +60,7 @@ resource "aws_subnet" "subnet5" {
 #subnet creation 6
 
 resource "aws_subnet" "subnet6" {
-  vpc_id     = aws_vpc.main_digital.id
+  vpc_id     = aws_vpc.appvpc.id
   cidr_block = "10.0.6.0/24"
   availability_zone = "ap-south-1a"
   tags = {
@@ -70,7 +70,7 @@ resource "aws_subnet" "subnet6" {
 
 #Internetgateway
 resource "aws_internet_gateway" "IG" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
   tags = {
    Name = "igway"
     }
@@ -78,7 +78,7 @@ resource "aws_internet_gateway" "IG" {
 #create route table
 
 resource "aws_route_table" "route_table_public" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
    tags = {
     Name = "public_rt"
      }
@@ -93,7 +93,7 @@ resource "aws_route_table" "route_table_public" {
 #create route table1
 
 resource "aws_route_table" "route_table_private1" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
    tags = {
     Name = "pvt1_rt"
      }
@@ -107,7 +107,7 @@ resource "aws_route_table" "route_table_private1" {
 #create route table2
 
 resource "aws_route_table" "route_table_private2" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
    tags = {
     Name = "pvt2_rt"
      }
@@ -121,7 +121,7 @@ resource "aws_route_table" "route_table_private2" {
 #create route table3
 
 resource "aws_route_table" "route_table_private3" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
    tags = {
     Name = "pvt3_rt"
      }
@@ -135,7 +135,7 @@ resource "aws_route_table" "route_table_private3" {
 #create route table4
 
 resource "aws_route_table" "route_table_private4" {
-  vpc_id = aws_vpc.main_digital.id
+  vpc_id = aws_vpc.appvpc.id
    tags = {
     Name = "pvt4_rt"
      }
