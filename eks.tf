@@ -104,4 +104,19 @@ resource "aws_eks_node_group" "worker-node-group" {
   ]
 }
 
+resource "null_resource" "install_kubectl" {
+  provisioner "local-exec" {
+    command = <<-EOT
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      sudo apt-get install unzip
+      unzip awscliv2.zip
+      sudo ./aws/install
+      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      sudo chmod +x kubectl
+      sudo mv kubectl /usr/local/bin/kubectl
 
+      aws eks update-kubeconfig --region us-east-1 --name eks-cluster
+
+    EOT
+  }
+}
